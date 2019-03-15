@@ -42,9 +42,12 @@ def main():
         )
     )
 
-    print('Congrats! Now you are a dockerzao da porra. Bye')
+    print('Congrats! Now you are a dockerzao da porra. Wait...')
 
     time.sleep(float(SLEEP))
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except (KeyboardInterrupt, SystemExit, OSError, RuntimeError):
+        print(' Bye')
