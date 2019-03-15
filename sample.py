@@ -10,7 +10,7 @@ import sys
 def main():
     HOST = os.environ.get('DB_HOST', 'localhost')
     PORT = os.environ.get('DB_PORT', 9200)
-    SLEEP = os.environ.get('SLEEP', 30)
+    SLEEP = os.environ.get('SLEEP', 10)
     TRIES = os.environ.get('TRIES', 3)
 
     DB = 'http://{}:{}'.format(
@@ -42,7 +42,7 @@ def main():
         )
     )
 
-    print('Congrats! Now you are a dockerzao da porra. Wait...')
+    print('\nCongrats! Now you are a dockerzao da porra. Wait...')
 
     time.sleep(float(SLEEP))
 

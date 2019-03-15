@@ -8,7 +8,7 @@ services:
     environment:
       - DB_HOST=elastic
       - DB_PORT=9200
-      - SLEEP=120
+      - SLEEP=1
       - TRIES=10
     volumes:
       - .:/home/docker-volume
