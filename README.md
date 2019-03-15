@@ -28,7 +28,7 @@ $ docker exec -it <contaner-name> sh
 $ docker exec -it <contaner-name> date
 ```
 
-Example
+Example:
 ```shell
 $ docker exec -it docker-class_container sh
 $ docker exec -it docker-class_container date
@@ -46,5 +46,5 @@ $ docker --help
 $ docker-compose --help
 ```
 
-[Docker docs](https://docs.docker.com/engine/reference/commandline/docker/)
-[Docker-compose docs](https://docs.docker.com/compose/compose-file/)
+* [Docker docs](https://docs.docker.com/engine/reference/commandline/docker/)
+* [Docker-compose docs](https://docs.docker.com/compose/compose-file/)
