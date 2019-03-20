@@ -46,10 +46,10 @@ $ docker-compose up -d
 $ docker-compose pull
 ```
 
-## Docker swarm
+## Swarm cluster creation
 ```shell
 $ docker swarm init --advertise-addr <ip-address>
-$ # Docker swarm token to join the cluster
+# Docker swarm token to join the cluster
 $ docker swarm join-token -q manager
 $ docker swarm join --token <token> <init-ip-address>:2377
 ```
@@ -62,7 +62,7 @@ $ TOKEN=$(docker swarm join-token -q manager 1> /dev/null) \
   docker swarm join --token $TOKEN 192.168.200.178:2377
 ```
 
-## Docker swarm up
+## Swarm stack deploy
 ```shell
 $ docker stack deploy --compose-file=<docker-compose-file> <stack-name>
 ```

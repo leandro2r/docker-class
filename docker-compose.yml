@@ -18,7 +18,7 @@ services:
       - .:/home/docker-volume
     # command: "tail -f /dev/null"
 
-  elastic_master:
+  elastic:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.3.2
     deploy:
       mode: global
@@ -26,7 +26,9 @@ services:
     environment:
       - TZ=America/Sao_Paulo
       - "ES_JAVA_OPTS=-Xms200m -Xmx200m"
-      - node.name=Dockerized_elastic
+      - node.name={{.Node.Hostname}}_{{.Service.Name}}
+      - cluster.name=docker-class-cluster
+      - "discovery.zen.ping.unicast.hosts=elastic"
     # ports:
     #   - 9200:9200
 
