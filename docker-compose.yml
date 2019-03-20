@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   api:
-    image: docker-class:0.0.1
+    image: leandro2r/docker-class:0.0.1
     deploy:
       mode: replicated
       placement:
