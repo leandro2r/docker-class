@@ -1,5 +1,11 @@
 # Docker-class
 
+The `leandro2r/docker-class` is already hosted in [Docker hub](https://hub.docker.com/r/leandro2r/docker-class).
+
+```shell
+$ docker pull leandro2r/docker-class
+```
+
 ## Image build
 ```shell
 $ docker build -t <image-name> .
@@ -38,6 +44,32 @@ $ docker exec -it docker-class_container date
 ```shell    
 $ docker-compose up -d
 $ docker-compose pull
+```
+
+## Docker swarm
+```shell
+$ docker swarm init --advertise-addr <ip-address>
+$ # Docker swarm token to join the cluster
+$ docker swarm join-token -q manager
+$ docker swarm join --token <token> <init-ip-address>:2377
+```
+
+Example:
+```shell
+$ docker swarm init --advertise-addr 192.168.200.178
+$ # Docker swarm token to join the cluster
+$ TOKEN=$(docker swarm join-token -q manager 1> /dev/null) \
+  docker swarm join --token $TOKEN 192.168.200.178:2377
+```
+
+## Docker swarm up
+```shell
+$ docker stack deploy --compose-file=<docker-compose-file> <stack-name>
+```
+
+Example:
+```shell
+$ docker stack deploy --compose-file=docker-compose.yml docker-class-stack
 ```
 
 ## Docker help

@@ -2,7 +2,6 @@ FROM alpine:latest
 
 ENV DB_HOST=192.168.100.118
 ENV DB_PORT=9200
-ENV SLEEP=20
 ENV TRIES=5
 
 RUN apk update && apk --no-cache add \

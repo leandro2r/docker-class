@@ -8,15 +8,20 @@ import sys
 
 
 def main():
-    HOST = os.environ.get('DB_HOST', 'localhost')
-    PORT = os.environ.get('DB_PORT', 9200)
-    SLEEP = os.environ.get('SLEEP', 10)
+    HOST = os.environ.get('DB_HOST', '127.0.0.1')
+    PORT = os.environ.get('DB_PORT', 9210)
     TRIES = os.environ.get('TRIES', 3)
 
     DB = 'http://{}:{}'.format(
         HOST,
         PORT,
     )
+
+    data = {
+        'user': 'Leandro Rodrigues',
+        'email': 'leandro.l2r@gmail.com',
+        'message': 'Good job!'
+    }
 
     msg = ''
 
@@ -42,9 +47,19 @@ def main():
         )
     )
 
-    print('\nCongrats! Now you are a dockerzao da porra. Wait...')
+    print('Sending a message... Please wait.')
 
-    time.sleep(float(SLEEP))
+    try:
+        msg = requests.post(
+            '{}/.docker-class/typename/1'.format(DB),
+            headers={'content-type': 'application/json'},
+            json=data,
+        )
+    except requests.exceptions.RequestException as error:
+        print('\nFailed to connect: {}\n'.format(error))
+        sys.exit(1)
+    
+    print('Congrats! Now you are a dockerzao da porra. Bye')
 
 if __name__ == '__main__':
     try:

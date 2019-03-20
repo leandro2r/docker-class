@@ -3,22 +3,45 @@ version: '3.7'
 services:
   api:
     image: docker-class:0.0.1
-    depends_on:
-      - elastic
+    deploy:
+      mode: replicated
+      placement:
+        constraints:
+          - node.labels.slave == true
+    networks: &cluster
+      - cluster
     environment:
       - DB_HOST=elastic
       - DB_PORT=9200
-      - SLEEP=1
       - TRIES=10
     volumes:
       - .:/home/docker-volume
     # command: "tail -f /dev/null"
 
-  elastic:
+  elastic_master:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.3.2
+    deploy:
+      mode: global
+    networks: *cluster
     environment:
       - TZ=America/Sao_Paulo
       - "ES_JAVA_OPTS=-Xms200m -Xmx200m"
       - node.name=Dockerized_elastic
     # ports:
     #   - 9200:9200
+
+  kibana: 
+    image: docker.elastic.co/kibana/kibana:6.3.2
+    deploy:
+      mode: replicated
+      placement:
+        constraints:
+          - node.labels.master == true
+    networks: *cluster
+    environment:
+      - TZ=America/Sao_Paulo
+      - XPACK_SECURITY_ENABLED=false
+    volumes:
+      - ./kibana/config.yml:/usr/share/kibana/config/kibana.yml
+    ports:
+      - 80:5601
