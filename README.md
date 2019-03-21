@@ -52,14 +52,26 @@ $ docker swarm init --advertise-addr <ip-address>
 # Docker swarm token to join the cluster
 $ docker swarm join-token -q manager
 $ docker swarm join --token <token> <init-ip-address>:2377
+$ docker node promote <node-hostname>
 ```
 
 Example:
 ```shell
 $ docker swarm init --advertise-addr 192.168.200.178
-$ # Docker swarm token to join the cluster
-$ TOKEN=$(docker swarm join-token -q manager 1> /dev/null) \
-  docker swarm join --token $TOKEN 192.168.200.178:2377
+$ docker swarm join --token <join-token> 192.168.200.178:2377
+$ docker node promote docker-class
+```
+
+## Swarm node label set
+```shell
+$ docker node update --label-add <label>=<value> <node-hostname>
+$ docker node inspect --pretty <node-hostname>
+```
+
+Example:
+```shell
+$ docker node update --label-add master=true $(hostname)
+$ docker node inspect --pretty self
 ```
 
 ## Swarm stack deploy
@@ -69,7 +81,19 @@ $ docker stack deploy --compose-file=<docker-compose-file> <stack-name>
 
 Example:
 ```shell
-$ docker stack deploy --compose-file=docker-compose.yml docker-class-stack
+$ docker stack deploy --compose-file=docker-compose.yml class_stack
+```
+
+## Swarm stack list and logs
+```shell
+$ docker service ls
+$ docker service logs <service-name> --no-trunc -f
+```
+
+Example:
+```shell
+$ docker service ls
+$ docker service logs class_stack_api --no-trunc -f
 ```
 
 ## Docker help

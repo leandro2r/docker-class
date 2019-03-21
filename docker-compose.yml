@@ -7,28 +7,27 @@ services:
       mode: replicated
       placement:
         constraints:
-          - node.labels.slave == true
+          - node.labels.master == true
     networks: &cluster
-      - cluster
+      - net_class
     environment:
       - DB_HOST=elastic
       - DB_PORT=9200
       - TRIES=10
-    volumes:
-      - .:/home/docker-volume
     # command: "tail -f /dev/null"
 
   elastic:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.3.2
     deploy:
-      mode: global
+      mode: replicated
+      placement:
+        constraints:
+          - node.labels.master == true
     networks: *cluster
     environment:
       - TZ=America/Sao_Paulo
       - "ES_JAVA_OPTS=-Xms200m -Xmx200m"
       - node.name={{.Node.Hostname}}_{{.Service.Name}}
-      - cluster.name=docker-class-cluster
-      - "discovery.zen.ping.unicast.hosts=elastic"
     # ports:
     #   - 9200:9200
 
@@ -38,12 +37,16 @@ services:
       mode: replicated
       placement:
         constraints:
-          - node.labels.master == true
+          - node.labels.slave == true
     networks: *cluster
     environment:
       - TZ=America/Sao_Paulo
       - XPACK_SECURITY_ENABLED=false
     volumes:
-      - ./kibana/config.yml:/usr/share/kibana/config/kibana.yml
+      - ~/docker-class/kibana/config.yml:/usr/share/kibana/config/kibana.yml
     ports:
-      - 80:5601
+      - 5601:5601
+
+networks:
+  net_class:
+    driver: overlay
