@@ -45,7 +45,7 @@ services:
     volumes:
       - ~/docker-class/kibana/config.yml:/usr/share/kibana/config/kibana.yml
     ports:
-      - 5601:5601
+      - 80:5601
 
 networks:
   net_class:

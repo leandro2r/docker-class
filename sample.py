@@ -11,6 +11,7 @@ def main():
     HOST = os.environ.get('DB_HOST', '127.0.0.1')
     PORT = os.environ.get('DB_PORT', 9210)
     TRIES = os.environ.get('TRIES', 3)
+    INDEX_NAME = os.environ.get('INDEX_NAME', 'docker-class')
 
     DB = 'http://{}:{}'.format(
         HOST,
@@ -51,7 +52,7 @@ def main():
 
     try:
         msg = requests.post(
-            '{}/.docker-class/typename/1'.format(DB),
+            '{}/{}/typename/1'.format(INDEX_NAME, DB),
             headers={'content-type': 'application/json'},
             json=data,
         )
