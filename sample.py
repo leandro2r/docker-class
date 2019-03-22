@@ -52,7 +52,7 @@ def main():
 
     try:
         msg = requests.post(
-            '{}/{}/typename/1'.format(INDEX_NAME, DB),
+            '{}/{}/typename/1'.format(DB, INDEX_NAME),
             headers={'content-type': 'application/json'},
             json=data,
         )
